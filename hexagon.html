@@ -65,7 +65,7 @@
       mapStyle: 'mapbox://styles/mapbox/dark-v9',
       longitude: 136.381250,
       latitude: 35.954167,
-      zoom: 4,
+      zoom: 5,
       minZoom: 5,
       maxZoom: 15,
       pitch: 40.5
@@ -75,13 +75,23 @@
 
     const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
 
+    
+    const COLOR_DOMAIN = [0, 80];
     const COLOR_RANGE = [
-      [1, 152, 189],
-      [73, 227, 206],
-      [216, 254, 181],
-      [254, 237, 177],
-      [254, 173, 84],
-      [209, 55, 78]
+      [205, 255, 255],
+      [110, 255, 254],
+      [35, 204, 253],
+      [26, 155, 252],
+      [55, 107, 251],
+      [66, 253, 47],
+      [60, 202, 35],
+      [35, 151, 24],
+      [255, 253, 56],
+      [254, 202, 47],
+      [253, 152, 39],
+      [252, 82, 105],
+      [252, 13, 27],
+      [181, 7, 28]
     ];
 
     OPTIONS.forEach(key => {
@@ -98,12 +108,13 @@
 
       const hexagonLayer = new HexagonLayer({
         id: 'heatmap',
+        colorDomain: COLOR_DOMAIN,
         colorRange: COLOR_RANGE,
         data,
         elevationRange: [0, 1000],
         elevationScale: 250,
         extruded: true,
-        getElevationValue: points => points,
+        getElevation: d => d.val,
         getPosition: d => d,
         opacity: 1,
         ...options
@@ -116,7 +127,7 @@
 
     d3.csv('https://raw.githubusercontent.com/B-bobkov/raw/master/spread2.csv')
       .then(response => {
-      data = response.map((d,points) => [Number(d.lon), Number(d.lat), Number(points.val)]);
+      data = response.map(d => [Number(d.lon), Number(d.lat), Number(d.val)]);
       renderLayer();
     });
 
