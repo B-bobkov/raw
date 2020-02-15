@@ -104,7 +104,7 @@
         elevationScale: 250,
         extruded: true,
         getElevationValue: points => Math.floor(Math.random() * 5),
-        getPosition: d => d,
+        getPosition: d => [d.lon, d.lat],
         opacity: 1,
         ...options
       });
@@ -114,7 +114,7 @@
       });
     }
 
-    d3.csv('https://raw.githubusercontent.com/B-bobkov/raw/master/spread1.csv')
+    d3.csv('https://raw.githubusercontent.com/B-bobkov/raw/master/spread2.csv')
       .then(response => {
       data = response.map(d => [Number(d.lon), Number(d.lat), Number(d.val)]);
       renderLayer();
