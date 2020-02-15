@@ -63,9 +63,9 @@
     const deckgl = new DeckGL({
       mapboxApiAccessToken: '<mapbox-access-token>',
       mapStyle: 'mapbox://styles/mapbox/dark-v9',
-      longitude: 125.756250,
-      latitude: 22.237500,
-      zoom: 6,
+      longitude: 136.381250,
+      latitude: 35.954167,
+      zoom: 4,
       minZoom: 5,
       maxZoom: 15,
       pitch: 40.5
@@ -103,6 +103,7 @@
         elevationRange: [0, 1000],
         elevationScale: 250,
         extruded: true,
+        getElevationValue: points => Math.floor(Math.random() * 5),
         getPosition: d => d,
         opacity: 1,
         ...options
@@ -113,9 +114,9 @@
       });
     }
 
-    d3.csv('spread1.csv')
+    d3.csv('https://raw.githubusercontent.com/B-bobkov/raw/master/spread1.csv')
       .then(response => {
-      data = response.map(d => [Number(d.lng), Number(d.lat), Number(d.val)]);
+      data = response.map(d => [Number(d.lon), Number(d.lat), Number(d.val)]);
       renderLayer();
     });
 
